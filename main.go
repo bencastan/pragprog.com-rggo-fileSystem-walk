@@ -55,6 +55,6 @@ func run(root string, out io.Writer, cfg config) error {
 		}
 
 		// List is the default option if nothing else was set
-		return listFile(paath, out)
+		return listFile(path, out)
 	} )
 }
