@@ -21,7 +21,7 @@ func main() {
 	// Parsing command line flags
 	root := flag.String("root", ".", "root directory to start")
 	// Action options
-	list := flag.Bool("list", "", "List files only")
+	list := flag.Bool("list", false, "List files only")
 	// Filter options
 	ext := flag.String("ext", "", "File extension to filter out")
 	size := flag.Int64("size", 0, "Minimum file size")
@@ -34,7 +34,7 @@ c := config{
 	list: *list,
 }
 if err := run(*root, os.Stdout, c); err != nil {
-	fmt.Println(os.Stderr, err)
+	fmt.Fprintln(os.Stderr, err)
 	os.Exit(1)
 }
 }
