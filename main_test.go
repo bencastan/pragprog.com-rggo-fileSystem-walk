@@ -123,8 +123,3 @@ func TestRunDelExtension(t *testing.T) {
 		})
 	}
 	
-
-
-
-
-glpat-LJTFL_DtQzzxtaLAmd2_
