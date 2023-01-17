@@ -34,7 +34,12 @@ func TestRun(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			var buffer bytes.Buffer
+			var (
+				buffer 		bytes.Buffer
+				logBuffer	bytes.Buffer
+			)
+			
+			tc.cfg.wLog = & logBuffer
 
 			if err := run(tc.root, &buffer, tc.cfg); err != nil {
 				t.Fatal(err)
@@ -45,6 +50,12 @@ func TestRun(t *testing.T) {
 			if tc.expected != res {
 				t.Errorf("Expected %q, got %q instead\n", tc.expected,
 					res)
+			}
+			expLogLines := tc.nDelete + 1
+			lines := bytes.Split(logBuffer.Bytes(), []byte("\n"))
+			if len(lines) != expLogLines {
+				t.Errorf("Expected %d log lines, got %d instead\n",
+					expLogLines, len(lines))
 			}
 		})
 	}
@@ -95,7 +106,12 @@ func TestRunDelExtension(t *testing.T) {
 	// Execute RunDel test cases
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			var buffer bytes.Buffer
+			var (
+				buffer 		bytes.Buffer
+				logBuffer	bytes.Buffer
+			)
+
+			tc.cfg.wLog = &logBuffer
 
 			tempDir, cleanup := createTempDir(t, map[string]int{
 				tc.cfg.ext:	tc.nDelete,
@@ -122,4 +138,4 @@ func TestRunDelExtension(t *testing.T) {
 			}
 		})
 	}
-	
+}
